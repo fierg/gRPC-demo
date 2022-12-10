@@ -1,4 +1,4 @@
-package Logger
+package org.fierg.logger
 
 import java.util.logging.Level
 import java.util.logging.LogManager

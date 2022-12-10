@@ -1,4 +1,6 @@
-import Model.GameInstance
+package org.fierg.solver
+
+import org.fierg.model.GameInstance
 import kotlin.math.pow
 import kotlin.random.Random
 
