@@ -1,4 +1,4 @@
-package Extensions
+package org.fierg.extensions
 
 import kotlin.math.log10
 

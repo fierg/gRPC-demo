@@ -1,17 +1,17 @@
 syntax = "proto3";
 
-package org.example;
+package org.fierg;
 
 option java_multiple_files = true;
 
-service HelloService {
-  rpc hello (HelloRequest) returns (HelloReply) {}
+service GameService {
+  rpc solve (GameStringRequest) returns (GameStringReply) {}
 }
 
-message HelloRequest {
+message GameStringRequest {
   string name = 1;
 }
 
-message HelloReply {
+message GameStringReply {
   string message = 1;
 }

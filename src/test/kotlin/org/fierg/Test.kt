@@ -1,8 +1,9 @@
-package org.example
+package org.fierg
 
-import Generator.Companion.generateRandom
-import ILP.ILPSolver
-import Logger.Logger
+import org.fierg.solver.Generator.Companion.generateRandom
+import org.fierg.solver.ILPSolver
+import org.fierg.logger.Logger
+import org.fierg.solver.FileHandler
 import org.junit.jupiter.api.Test
 import java.io.File
 

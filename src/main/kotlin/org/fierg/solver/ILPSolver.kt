@@ -1,13 +1,13 @@
-package ILP
+package org.fierg.solver
 
 import gurobi.*
-import Logger.Logger
-import Model.GameInstance
+import org.fierg.logger.Logger
+import org.fierg.model.GameInstance
 import kotlin.math.pow
 
 class ILPSolver {
 
-    fun solve(game: GameInstance): Double {
+    fun solve(game: GameInstance): Pair<Double, String> {
         var index = 0
         val map = mutableMapOf<Int, Int>()
         game.numbers.forEach { array ->
@@ -22,7 +22,7 @@ class ILPSolver {
     }
 
 
-    fun solve(nrOfSymbols: Int = 3, fixedVars: MutableMap<Int, Int>): Double {
+    fun solve(nrOfSymbols: Int = 3, fixedVars: MutableMap<Int, Int>): Pair<Double, String> {
         val env = GRBEnv("pco-ilp.log")
         env.set(GRB.IntParam.LogToConsole, 0)
         env.start()
@@ -41,15 +41,15 @@ class ILPSolver {
             model.optimize()
 
             Logger.info("Obj : " + model.get(GRB.DoubleAttr.ObjVal))
-            val result = model.get(GRB.DoubleAttr.ObjVal)
+            val resultVal = model.get(GRB.DoubleAttr.ObjVal)
 
-            backTrackSolution(vars, fixedVars)
+            val resultString = backTrackSolution(vars, fixedVars)
 
             // Dispose of model and environment
             model.dispose()
             env.dispose()
 
-            return result
+            return Pair(resultVal,resultString)
 
         } catch (e: GRBException) {
             Logger.error(" Error code : " + e.errorCode.toString() + ". " + e.message)
@@ -57,14 +57,14 @@ class ILPSolver {
                 Logger.error("Model status = 3 -> model INFEASIBLE")
             }
 
-            return -1.0
+            return Pair(-1.0,"")
         }
     }
 
     private fun backTrackSolution(
         vars: MutableMap<Int, GRBVar>,
         fixedVars: MutableMap<Int, Int>
-    ) {
+    ): String {
         val sb = StringBuilder()
 
         for (position in 0..8) {
@@ -83,6 +83,7 @@ class ILPSolver {
             }
         }
         println(sb.toString())
+        return sb.toString()
     }
 
     private fun addObjectiveFunction(
