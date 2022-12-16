@@ -2,7 +2,9 @@ package org.fierg.solver
 
 import gurobi.*
 import org.fierg.logger.Logger
+import org.fierg.model.EncryptedGameInstance
 import org.fierg.model.GameInstance
+import org.fierg.model.Symbol
 import kotlin.math.pow
 
 class ILPSolver {
@@ -21,8 +23,16 @@ class ILPSolver {
         return solve(game.nrOfSymbols, map)
     }
 
+    fun solve(game: EncryptedGameInstance): Pair<Double, String> {
+        return solve(game.nrOfSymbols, mutableMapOf(), game.symbols)
+    }
 
-    fun solve(nrOfSymbols: Int = 3, fixedVars: MutableMap<Int, Int>): Pair<Double, String> {
+
+    private fun solve(
+        nrOfSymbols: Int = 3,
+        fixedVars: Map<Int, Int>,
+        fixedSymbols: Map<Int, Array<Symbol?>>? = null
+    ): Pair<Double, String> {
         val env = GRBEnv("pco-ilp.log")
         env.set(GRB.IntParam.LogToConsole, 0)
         env.start()
@@ -33,7 +43,7 @@ class ILPSolver {
             // Create variables
             val vars = mutableMapOf<Int, GRBVar>()
             addVariables(model, vars, fixedVars, nrOfSymbols)
-            val terms = addConstraint(vars, model, fixedVars)
+            val terms = addConstraint(vars, model, fixedVars, fixedSymbols)
             addObjectiveFunction(vars, model, fixedVars)
 
             // Optimize model
@@ -49,7 +59,7 @@ class ILPSolver {
             model.dispose()
             env.dispose()
 
-            return Pair(resultVal,resultString)
+            return Pair(resultVal, resultString)
 
         } catch (e: GRBException) {
             Logger.error(" Error code : " + e.errorCode.toString() + ". " + e.message)
@@ -57,13 +67,13 @@ class ILPSolver {
                 Logger.error("Model status = 3 -> model INFEASIBLE")
             }
 
-            return Pair(-1.0,"")
+            return Pair(-1.0, "")
         }
     }
 
     private fun backTrackSolution(
         vars: MutableMap<Int, GRBVar>,
-        fixedVars: MutableMap<Int, Int>
+        fixedVars: Map<Int, Int>
     ): String {
         val sb = StringBuilder()
 
@@ -89,7 +99,7 @@ class ILPSolver {
     private fun addObjectiveFunction(
         vars: MutableMap<Int, GRBVar>,
         model: GRBModel,
-        fixedVars: MutableMap<Int, Int>
+        fixedVars: Map<Int, Int>
     ) {
         val expr = GRBLinExpr()
 
@@ -110,7 +120,7 @@ class ILPSolver {
         b: Int,
         c: Int,
         model: GRBModel,
-        fixedVars: MutableMap<Int, Int>
+        fixedVars: Map<Int, Int>
     ) {
         val expr = GRBLinExpr()
         addTermsToExpression(fixedVars, vars, expr, a, b, c)
@@ -118,7 +128,7 @@ class ILPSolver {
     }
 
     private fun addTermsToExpression(
-        fixedVars: MutableMap<Int, Int>,
+        fixedVars: Map<Int, Int>,
         vars: Map<Int, GRBVar>,
         expr: GRBLinExpr,
         a: Int,
@@ -147,7 +157,8 @@ class ILPSolver {
     private fun addConstraint(
         vars: Map<Int, GRBVar>,
         model: GRBModel,
-        fixedVars: MutableMap<Int, Int>
+        fixedVars: Map<Int, Int>,
+        fixedSybols: Map<Int, Array<Symbol?>>?
     ): Int {
 
         addSumConstraint(vars, 0, 1, 2, model, fixedVars)
@@ -157,13 +168,25 @@ class ILPSolver {
         addSumConstraint(vars, 1, 4, 7, model, fixedVars)
         addSumConstraint(vars, 2, 5, 8, model, fixedVars)
 
+        val symbolMap = mutableMapOf<Symbol, MutableList<Pair<Int, Int>>>()
+        if (!fixedSybols.isNullOrEmpty()) {
+            fixedSybols.forEach { (index1, array) ->
+                array.forEachIndexed { index2, symbol ->
+                    if (symbol != null) {
+                        if (symbolMap[symbol].isNullOrEmpty()) symbolMap[symbol] = mutableListOf()
+                        symbolMap[symbol]!!.add(Pair(index1,index2))
+                    }
+                }
+            }
+        }
+
         return 6
     }
 
     private fun addVariables(
         model: GRBModel,
         vars: MutableMap<Int, GRBVar>,
-        fixedVars: MutableMap<Int, Int>,
+        fixedVars: Map<Int, Int>,
         nrOfSymbols: Int
     ) {
         for (position in 0..8) {

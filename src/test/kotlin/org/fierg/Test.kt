@@ -9,10 +9,6 @@ import java.io.File
 
 class Test {
 
-    @Test
-    fun testILPSolver() {
-        ILPSolver().solve(2, mutableMapOf(0 to 40, 2 to 50, 3 to 9, 7 to 26))
-    }
 
     @Test
     fun testJson() {
@@ -31,6 +27,12 @@ class Test {
     @Test
     fun testFileReader() {
         val game = FileHandler.readBasicFile("data/basicFile.txt")
+        ILPSolver().solve(game)
+    }
+
+    @Test
+    fun testEncryptedFile(){
+        val game = FileHandler.readEncryptedFile(File("data/encryptedFile.txt").readText())
         ILPSolver().solve(game)
     }
 }

@@ -4,13 +4,14 @@ import io.grpc.ManagedChannelBuilder
 import org.fierg.GameServiceGrpcKt
 import org.fierg.GameStringRequest
 import org.fierg.logger.Logger
+import java.io.File
 
 suspend fun helloClient() {
     val channel = ManagedChannelBuilder.forAddress("localhost", 15001)
         .usePlaintext()
         .build()
     val stub = GameServiceGrpcKt.GameServiceCoroutineStub(channel)
-    val response = stub.solve(GameStringRequest.newBuilder().setName("40 + 10 = 50\n9 + 16 = 25\n49 + 26 = 75").build())
+    val response = stub.solve(GameStringRequest.newBuilder().setName(File("data/encryptedFile.txt").readText()).build())
     Logger.info(response.message)
 }
 
