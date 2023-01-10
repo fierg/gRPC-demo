@@ -158,7 +158,7 @@ class ILPSolver {
         vars: Map<Int, GRBVar>,
         model: GRBModel,
         fixedVars: Map<Int, Int>,
-        fixedSybols: Map<Int, Array<Symbol?>>?
+        fixedSymbols: Map<Int, Array<Symbol?>>?
     ): Int {
 
         addSumConstraint(vars, 0, 1, 2, model, fixedVars)
@@ -169,8 +169,8 @@ class ILPSolver {
         addSumConstraint(vars, 2, 5, 8, model, fixedVars)
 
         val symbolMap = mutableMapOf<Symbol, MutableList<Pair<Int, Int>>>()
-        if (!fixedSybols.isNullOrEmpty()) {
-            fixedSybols.forEach { (index1, array) ->
+        if (!fixedSymbols.isNullOrEmpty()) {
+            fixedSymbols.forEach { (index1, array) ->
                 array.forEachIndexed { index2, symbol ->
                     if (symbol != null) {
                         if (symbolMap[symbol].isNullOrEmpty()) symbolMap[symbol] = mutableListOf()
@@ -178,6 +178,13 @@ class ILPSolver {
                     }
                 }
             }
+
+            symbolMap.forEach { (symbol, pos) ->
+                if (pos.size > 1) {
+                    //TODO
+                }
+            }
+
         }
 
         return 6

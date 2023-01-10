@@ -74,7 +74,7 @@ class FileHandler {
                     group.toCharArray().forEachIndexed { arrayIndex, c ->
                         array[arrayIndex] = Symbol.valueOf(c.toString())
                     }
-                    map[index++] = array
+                    map[index++] = array.reversedArray()
                 }
             }
             return EncryptedGameInstance(size, map)

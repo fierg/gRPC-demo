@@ -3,6 +3,7 @@ package org.fierg
 import org.fierg.solver.Generator.Companion.generateRandom
 import org.fierg.solver.ILPSolver
 import org.fierg.logger.Logger
+import org.fierg.solver.BruteForceSolver
 import org.fierg.solver.FileHandler
 import org.junit.jupiter.api.Test
 import java.io.File
@@ -34,5 +35,11 @@ class Test {
     fun testEncryptedFile(){
         val game = FileHandler.readEncryptedFile(File("data/encryptedFile.txt").readText())
         ILPSolver().solve(game)
+    }
+
+    @Test
+    fun testEncryptedSolve(){
+        val game = FileHandler.readEncryptedFile(File("data/encryptedFile.txt").readText())
+        BruteForceSolver().solve(game)
     }
 }

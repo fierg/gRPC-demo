@@ -7,12 +7,13 @@ import io.grpc.ServerBuilder
 import org.fierg.GameServiceGrpcKt
 import org.fierg.GameStringReply
 import org.fierg.GameStringRequest
+import org.fierg.solver.BruteForceSolver
 
 class HelloService : GameServiceGrpcKt.GameServiceCoroutineImplBase() {
     override suspend fun solve(request: GameStringRequest): GameStringReply {
         Logger.info("Handling request...")
-        val game = FileHandler.readString(request.name)
-        return GameStringReply.newBuilder().setMessage(ILPSolver().solve(game).second).build()
+        val game = FileHandler.readEncryptedFile(request.name)
+        return GameStringReply.newBuilder().setMessage(BruteForceSolver().solve(game)).build()
     }
 }
 
