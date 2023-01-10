@@ -1,6 +1,6 @@
 package org.fierg.solver
 
-import Permutations
+import org.fierg.extensions.Permutations
 import org.fierg.logger.Logger
 import org.fierg.model.EncryptedGameInstance
 import org.fierg.model.Symbol
