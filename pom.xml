@@ -91,15 +91,11 @@
             <version>2.10</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/gurobi/gurobi
         <dependency>
-            <groupId>gurobi</groupId>
-            <artifactId>gurobi</artifactId>
-            <scope>system</scope>
-            <version>9.1.0</version>
-            <systemPath>/opt/gurobi/gurobi951/linux64/lib/gurobi.jar</systemPath>
+            <groupId>com.github.salomonbrys.kodein</groupId>
+            <artifactId>kodein</artifactId>
+            <version>4.1.0</version>
         </dependency>
-        -->
 
         <!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api -->
         <dependency>
@@ -114,6 +110,12 @@
             <artifactId>junit-jupiter-engine</artifactId>
             <version>5.9.1</version>
             <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.eclipse.paho</groupId>
+            <artifactId>org.eclipse.paho.client.mqttv3</artifactId>
+            <version>1.2.0</version>
         </dependency>
 
     </dependencies>

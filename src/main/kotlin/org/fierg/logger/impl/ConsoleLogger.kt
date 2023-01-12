@@ -1,10 +1,11 @@
-package org.fierg.logger
+package org.fierg.logger.impl
 
+import org.fierg.logger.LogConsumer
 import java.util.logging.Level
 import java.util.logging.LogManager
 import java.util.logging.Logger
 
-object Logger {
+object ConsoleLogger : LogConsumer {
     var LOGGER: Logger? = null
 
     init {
@@ -20,15 +21,15 @@ object Logger {
         LOGGER = Logger.getLogger(Logger::class.java.name)
     }
 
-    fun debug(msg:String) {
+    override fun debug(msg:String) {
         LOGGER!!.log(Level.FINE, msg)
     }
 
-    fun info(msg:String) {
+    override fun info(msg:String) {
         LOGGER!!.log(Level.INFO, msg)
     }
 
-    fun error(msg:String) {
+    override fun error(msg:String) {
         LOGGER!!.log(Level.SEVERE, msg)
     }
 

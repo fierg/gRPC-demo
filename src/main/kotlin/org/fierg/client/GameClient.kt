@@ -3,7 +3,7 @@ package org.fierg.client
 import io.grpc.ManagedChannelBuilder
 import org.fierg.GameServiceGrpcKt
 import org.fierg.GameStringRequest
-import org.fierg.logger.Logger
+import org.fierg.logger.impl.ConsoleLogger
 import java.io.File
 
 suspend fun helloClient() {
@@ -12,7 +12,7 @@ suspend fun helloClient() {
         .build()
     val stub = GameServiceGrpcKt.GameServiceCoroutineStub(channel)
     val response = stub.solve(GameStringRequest.newBuilder().setName(File("data/encryptedFile.txt").readText()).build())
-    Logger.info(response.message)
+    ConsoleLogger.info(response.message)
 }
 
 suspend fun main(args: Array<String>) {
