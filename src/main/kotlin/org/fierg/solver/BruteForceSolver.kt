@@ -1,9 +1,12 @@
 package org.fierg.solver
 
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.runBlocking
 import org.fierg.extensions.Permutations
 import org.fierg.logger.Logger
 import org.fierg.model.EncryptedGameInstance
 import org.fierg.model.Symbol
+import java.util.concurrent.TimeUnit
 import kotlin.math.pow
 
 class BruteForceSolver {
@@ -33,8 +36,13 @@ class BruteForceSolver {
 
     private fun solveEncrypted(game: EncryptedGameInstance): Array<Int> {
         val perms = Permutations(listOf(0, 1, 2, 3, 4, 5, 6, 7, 8, 9).toTypedArray())
+        var nr = 0
         while (perms.hasNext()) {
             val currentSolution = perms.next()
+            Logger.info("Trying permutation #${nr++}: ${currentSolution.map { it }}")
+            runBlocking {
+                delay(100)
+            }
 
             val value0 = getValueOfField(game, currentSolution, 0)
             val value1 = getValueOfField(game, currentSolution, 1)
@@ -51,7 +59,7 @@ class BruteForceSolver {
                     val value8 = getValueOfField(game, currentSolution, 8)
 
                     if (value6 + value7 == value8) {
-                        if (value0 + value3 == value6)
+                        if (value0 + value3 == value6 && value1 + value4 == value7)
                             return currentSolution
                         else continue
                     }

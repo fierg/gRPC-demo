@@ -2,20 +2,6 @@
 
 ---
 
-### Preliminaries
-
-Install [Gurobi](https://www.gurobi.com/) which is a free to use solver for various models and equations.
-Point `pom.xml` to the local gurobi jar:
-```xml
-    <dependency>
-        <groupId>gurobi</groupId>
-        <artifactId>gurobi</artifactId>
-        <scope>system</scope>
-        <version>9.1.0</version>
-        <systemPath>/opt/gurobi/gurobi951/linux64/lib/gurobi.jar</systemPath>
-    </dependency>
-```
-
 ### Build and Use
 
 Build jar with `mvn clean install` in the project path.
