@@ -2,7 +2,7 @@ package org.fierg.logger.impl
 
 import org.fierg.logger.LogConsumer
 
-class FileLogger: LogConsumer {
+object FileLogger: LogConsumer {
     override fun info(msg: String) {
         TODO("Not yet implemented")
     }

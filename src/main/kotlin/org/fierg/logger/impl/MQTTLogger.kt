@@ -11,16 +11,20 @@ import java.util.*
 object MQTTLogger: LogConsumer {
 
     val TOPIC = "TestTopic"
+    private var publisher: IMqttClient? = null
 
     private fun getPublisher(): IMqttClient {
+        if (publisher != null) return publisher!!
+
         val publisherId = UUID.randomUUID().toString()
-        val publisher: IMqttClient = MqttClient("tcp://iot.eclipse.org:1883", publisherId)
+        val publisher1: IMqttClient = MqttClient("tcp://localhost:8883", publisherId)
         val options = MqttConnectOptions()
         options.isAutomaticReconnect = true
         options.isCleanSession = true
         options.connectionTimeout = 10
-        publisher.connect(options)
-        return publisher
+        publisher1.connect(options)
+        publisher = publisher1
+        return publisher1
     }
 
     override fun info(msg: String) {
