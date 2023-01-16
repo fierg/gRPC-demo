@@ -28,14 +28,14 @@ object MQTTLogger: LogConsumer {
     }
 
     override fun info(msg: String) {
-        getPublisher().publish(TOPIC, MqttMessage("test".toByteArray()))
+        getPublisher().publish(TOPIC, MqttMessage("INFO: $msg".toByteArray()))
     }
 
     override fun debug(msg: String) {
-        TODO("Not yet implemented")
+        getPublisher().publish(TOPIC, MqttMessage("DEBUG: $msg".toByteArray()))
     }
 
     override fun error(msg: String) {
-        TODO("Not yet implemented")
+        getPublisher().publish(TOPIC, MqttMessage("ERROR: $msg".toByteArray()))
     }
 }

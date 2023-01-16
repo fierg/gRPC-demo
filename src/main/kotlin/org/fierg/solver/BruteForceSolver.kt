@@ -1,25 +1,15 @@
 package org.fierg.solver
 
-import com.github.salomonbrys.kodein.Kodein
-import com.github.salomonbrys.kodein.bind
-import com.github.salomonbrys.kodein.instance
-import com.github.salomonbrys.kodein.singleton
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import org.fierg.extensions.Permutations
 import org.fierg.logger.LogConsumer
 import org.fierg.logger.impl.ConsoleLogger
-import org.fierg.logger.impl.MQTTLogger
 import org.fierg.model.EncryptedGameInstance
 import org.fierg.model.Symbol
 import kotlin.math.pow
 
 class BruteForceSolver {
-
-    private val kodein = Kodein {
-        bind<LogConsumer>("console") with singleton { ConsoleLogger }
-        bind<LogConsumer>("mqtt") with singleton { MQTTLogger }
-    }
 
     fun solve(game: EncryptedGameInstance): String {
         val solution = solveEncrypted(game)
@@ -49,7 +39,7 @@ class BruteForceSolver {
         var nr = 0
         while (perms.hasNext()) {
             val currentSolution = perms.next()
-            kodein.instance<LogConsumer>("mqtt").info("Trying permutation #${nr++}: ${currentSolution.map { it }}")
+            LogConsumer.getImpl().info("Trying permutation #${nr++}: ${currentSolution.map { it }}")
             runBlocking {
                 delay(100)
             }

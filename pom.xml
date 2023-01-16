@@ -24,7 +24,16 @@
         <maven.compiler.target>17</maven.compiler.target>
         <os.detected.classifier>linux-x86_64</os.detected.classifier>
         <!-- <os.detected.classifier>windows-x86_64</os.detected.classifier> -->
+
+        <main.class>com.example.ApplicationKt</main.class>
     </properties>
+
+    <repositories>
+        <repository>
+            <id>ktor-eap</id>
+            <url>https://maven.pkg.jetbrains.space/public/p/ktor/eap</url>
+        </repository>
+    </repositories>
 
     <dependencies>
         <dependency>
@@ -117,6 +126,33 @@
             <artifactId>org.eclipse.paho.client.mqttv3</artifactId>
             <version>1.2.0</version>
         </dependency>
+
+        <dependency>
+            <groupId>io.ktor</groupId>
+            <artifactId>ktor-server-core-jvm</artifactId>
+            <version>2.2.2</version>
+        </dependency>
+        <dependency>
+            <groupId>io.ktor</groupId>
+            <artifactId>ktor-server-netty-jvm</artifactId>
+            <version>2.2.2</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-slf4j-impl -->
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-slf4j-impl</artifactId>
+            <version>2.19.0</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-jdk14 -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-jdk14</artifactId>
+            <version>2.0.6</version>
+        </dependency>
+
+
 
     </dependencies>
 

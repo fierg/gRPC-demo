@@ -4,7 +4,7 @@ package org.fierg;
 
 option java_multiple_files = true;
 
-service GameService {
+service GameServer {
   rpc solve (GameStringRequest) returns (GameStringReply) {}
 }
 

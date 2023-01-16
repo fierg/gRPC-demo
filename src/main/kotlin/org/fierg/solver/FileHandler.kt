@@ -1,9 +1,9 @@
 package org.fierg.solver
 
 import org.fierg.extensions.length
-import org.fierg.logger.impl.ConsoleLogger
 import org.fierg.model.GameInstance
 import com.google.gson.Gson
+import org.fierg.logger.LogConsumer
 import org.fierg.model.EncryptedGameInstance
 import org.fierg.model.Symbol
 import java.io.File
@@ -12,7 +12,7 @@ class FileHandler {
     companion object {
         private val regex = Regex("((?:\\d+)|(?:x)) \\+ ((?:\\d+)|(?:x)) = ((?:\\d+)|(?:x))")
         fun readBasicFile(file: String): GameInstance {
-            ConsoleLogger.info("Reading file from $file")
+            LogConsumer.getImpl().info("Reading file from $file")
             val game = File(file).readLines().map { line ->
                 if (regex.matches(line)) {
                     val groups = regex.find(line)!!.groupValues.filterIndexed { i, _ -> i > 0 }
@@ -25,17 +25,17 @@ class FileHandler {
 
 
         fun getJSON(gameInstance: GameInstance): String? {
-            ConsoleLogger.info("Generating JSON from object ...")
+            LogConsumer.getImpl().info("Generating JSON from object ...")
             return Gson().toJson(gameInstance)
         }
 
         fun fromJSON(json: String): GameInstance {
-            ConsoleLogger.info("Reading Instance from JSON ...")
+            LogConsumer.getImpl().info("Reading Instance from JSON ...")
             return Gson().fromJson(json, GameInstance::class.java)
         }
 
         fun readString(gameString: String): GameInstance {
-            ConsoleLogger.info("Reading game from string $gameString")
+            LogConsumer.getImpl().info("Reading game from string $gameString")
             val game = gameString.split("\n").map { line ->
                 if (regex.matches(line)) {
                     val groups = regex.find(line)!!.groupValues.filterIndexed { i, _ -> i > 0 }
@@ -53,13 +53,13 @@ class FileHandler {
                     .first() != 3
             ) throw IllegalArgumentException("Game Instance is malformed!")
 
-            ConsoleLogger.info("Game Instance has $nrOfDigits digits at each position.")
+            LogConsumer.getImpl().info("Game Instance has $nrOfDigits digits at each position.")
             return GameInstance(game, nrOfDigits)
         }
 
         fun readEncryptedFile(s: String): EncryptedGameInstance {
             val encryptedRegex = Regex("([A-J]+) \\+ ([A-J]+) = ([A-J]+)")
-            ConsoleLogger.info("Reading game from encrypted string $s")
+            LogConsumer.getImpl().info("Reading game from encrypted string $s")
             val map = mutableMapOf<Int,Array<Symbol?>>()
             val size = s.split("\n").map { line ->
                 if (encryptedRegex.matches(line)) {
