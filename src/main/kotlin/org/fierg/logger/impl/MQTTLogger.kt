@@ -10,7 +10,7 @@ import java.util.*
 
 object MQTTLogger: LogConsumer {
 
-    val TOPIC = "TestTopic"
+    val TOPIC = "Solver"
     private var publisher: IMqttClient? = null
 
     private fun getPublisher(): IMqttClient {
