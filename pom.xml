@@ -15,17 +15,18 @@
         <kotlin.version>1.7.22</kotlin.version>
         <kotlin.code.style>official</kotlin.code.style>
         <junit.version>4.13.2</junit.version>
+        <kotlin.compiler.incremental>true</kotlin.compiler.incremental>
 
         <grpc.version>1.46.0</grpc.version>
         <grpc.kotlin.version>1.2.0</grpc.kotlin.version>
         <protobuf.version>3.20.3</protobuf.version>
         <java.grpc.version>1.39.0</java.grpc.version>
+
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <os.detected.classifier>linux-x86_64</os.detected.classifier>
         <!-- <os.detected.classifier>windows-x86_64</os.detected.classifier> -->
-
-        <main.class>com.example.ApplicationKt</main.class>
+        <main.class>org.fierg.Application</main.class>
     </properties>
 
     <repositories>
@@ -158,6 +159,29 @@
         <testSourceDirectory>src/test/kotlin</testSourceDirectory>
 
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>3.4.0</version>
+                <executions>
+                    <execution>
+                        <id>make-assembly</id>
+                        <phase>package</phase>
+                        <goals> <goal>single</goal> </goals>
+                        <configuration>
+                            <archive>
+                                <manifest>
+                                    <mainClass>${main.class}</mainClass>
+                                </manifest>
+                            </archive>
+                            <descriptorRefs>
+                                <descriptorRef>jar-with-dependencies</descriptorRef>
+                            </descriptorRefs>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
             <plugin>
                 <groupId>org.jetbrains.kotlin</groupId>
                 <artifactId>kotlin-maven-plugin</artifactId>

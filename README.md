@@ -5,7 +5,7 @@
 ### Build and Use
 
 Build jar with `mvn clean install` in the project path.
-The runnable jar will be built under `target/gRPC-demo-1.0-SNAPSHOT.jar`.
+The runnable jar will be built under `target/gRPC-demo-1.0-SNAPSHOT-jar-with-dependiencies.jar`.
 A collection oft test cases is also available.
 
 ### Implementation description
@@ -21,3 +21,7 @@ Logging is done via the `LogConsumer` interface and the instances are handled by
 A simple HTTP Get request to `localhost:8080/log/{type}`changes the Logger impl during runtime. REST Handling is done by KTor.
 
 Currently `console`, `file` and `mqtt` are available as Log Consumers. 
+
+### MQTT Broker
+
+The MQTT Broker is started with `./run-mqtt-docker.sh` in the `mqtt` folder. Logs are accessible with the `MQTTClient.kt`.

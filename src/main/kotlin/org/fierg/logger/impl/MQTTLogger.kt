@@ -13,7 +13,7 @@ object MQTTLogger: LogConsumer {
     val TOPIC = "Solver"
     private var publisher: IMqttClient? = null
 
-    private fun getPublisher(): IMqttClient {
+    fun getMQTTServer(): IMqttClient {
         if (publisher != null) return publisher!!
 
         val publisherId = UUID.randomUUID().toString()
@@ -28,14 +28,14 @@ object MQTTLogger: LogConsumer {
     }
 
     override fun info(msg: String) {
-        getPublisher().publish(TOPIC, MqttMessage("INFO: $msg".toByteArray()))
+        getMQTTServer().publish(TOPIC, MqttMessage("INFO: $msg".toByteArray()))
     }
 
     override fun debug(msg: String) {
-        getPublisher().publish(TOPIC, MqttMessage("DEBUG: $msg".toByteArray()))
+        getMQTTServer().publish(TOPIC, MqttMessage("DEBUG: $msg".toByteArray()))
     }
 
     override fun error(msg: String) {
-        getPublisher().publish(TOPIC, MqttMessage("ERROR: $msg".toByteArray()))
+        getMQTTServer().publish(TOPIC, MqttMessage("ERROR: $msg".toByteArray()))
     }
 }
