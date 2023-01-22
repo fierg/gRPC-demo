@@ -9,8 +9,9 @@ import org.fierg.client.GameClient
 import org.fierg.logger.LogConsumer
 import org.fierg.server.GameServer
 
-class Application {
-    fun main() {
+object Application {
+    @JvmStatic
+    fun main(args: Array<String>) {
         val port = 8080
         embeddedServer(Netty, port) {
             LogConsumer.getImpl().info("Starting HTTP REST Server at port $port")
@@ -34,8 +35,4 @@ class Application {
             }
         }.start(wait = true)
     }
-}
-
-fun main() {
-    Application().main()
 }

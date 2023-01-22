@@ -18,11 +18,11 @@ class GameServer : GameServerGrpcKt.GameServerCoroutineImplBase() {
     }
 
     fun serveGRPC() {
-        val helloService = GameServer()
+        val gameService = GameServer()
         val port = 15001
         val server = ServerBuilder
             .forPort(port)
-            .addService(helloService)
+            .addService(gameService)
             .build()
 
         Runtime.getRuntime().addShutdownHook(Thread {

@@ -11,17 +11,15 @@ import org.fierg.logger.impl.MQTTLogger
 interface LogConsumer {
 
   companion object {
-      val kodein = Kodein {
+      private var currentTag = "console"
+      private val kodein = Kodein {
           bind<LogConsumer>("console") with singleton { ConsoleLogger }
           bind<LogConsumer>("mqtt") with singleton { MQTTLogger }
           bind<LogConsumer>("file") with singleton { FileLogger }
       }
-      var currentTag = "console"
-
       fun getImpl(): LogConsumer {
           return kodein.instance(currentTag)
       }
-
       fun changeImpl(newTag: String) {
           currentTag = newTag
       }

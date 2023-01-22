@@ -12,24 +12,20 @@ object MQTTClient {
         val qos = 0
         try {
             val client = MqttClient(broker, clientid, MemoryPersistence())
-            // connect options
             val options = MqttConnectOptions()
             options.connectionTimeout = 60
             options.keepAliveInterval = 60
-            // setup callback
             client.setCallback(object : MqttCallback {
                 override fun connectionLost(cause: Throwable) {
-                    println("connectionLost: " + cause.message)
+                    println("connection Lost: " + cause.message)
                 }
 
                 override fun messageArrived(topic: String, message: MqttMessage) {
-                    println("topic: $topic")
-                    println("Qos: " + message.qos)
-                    println("message content: " + String(message.payload))
+                    println("topic: $topic message content: ${String(message.payload)}")
                 }
 
                 override fun deliveryComplete(token: IMqttDeliveryToken) {
-                    println("deliveryComplete---------" + token.isComplete)
+                    println("delivery Complete ---------" + token.isComplete)
                 }
             })
             client.connect(options)

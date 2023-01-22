@@ -23,7 +23,6 @@ class BruteForceSolver {
                 if (s != null)
                     sb.append(solution[s.ordinal])
             }
-
             when (position % 3) {
                 0 -> sb.append(" + ")
                 1 -> sb.append(" = ")
@@ -43,7 +42,6 @@ class BruteForceSolver {
             runBlocking {
                 delay(100)
             }
-
             val value0 = getValueOfField(game, currentSolution, 0)
             val value1 = getValueOfField(game, currentSolution, 1)
             val value2 = getValueOfField(game, currentSolution, 2)
