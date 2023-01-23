@@ -7,7 +7,7 @@ object MQTTClient {
     @JvmStatic
     fun main(args: Array<String>) {
         val broker = "tcp://localhost:8883"
-        val topic = "Solver"
+        val topic = "GAME"
         val clientid = "subscribe_client"
         val qos = 0
         try {
@@ -30,6 +30,7 @@ object MQTTClient {
             })
             client.connect(options)
             client.subscribe(topic, qos)
+            println("Listening to broker $broker at topic $topic ...")
         } catch (e: Exception) {
             e.printStackTrace()
         }
