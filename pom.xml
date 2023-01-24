@@ -3,12 +3,14 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.fierg</groupId>
+    <groupId>io.github.fierg</groupId>
     <artifactId>gRPC-demo</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
     <packaging>jar</packaging>
 
     <name>gRPC-demo</name>
+    <description>A demo application of gRPC and MQTT.</description>
+    <url>https://github.com/fierg/gRPC-demo</url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -26,7 +28,7 @@
         <maven.compiler.target>17</maven.compiler.target>
         <os.detected.classifier>linux-x86_64</os.detected.classifier>
         <!-- <os.detected.classifier>windows-x86_64</os.detected.classifier> -->
-        <main.class>org.fierg.Application</main.class>
+        <main.class>io.github.fierg.Application</main.class>
     </properties>
 
     <repositories>
@@ -266,4 +268,25 @@
         </plugins>
     </build>
 
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <url>http://www.opensource.org/licenses/mit-license.php</url>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <name>Sven Fiergolla</name>
+            <email>sven.fiergolla.dev@gmail.com</email>
+            <organization>fierg</organization>
+            <organizationUrl>https://github.com/fierg</organizationUrl>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>scm:git:git://github.com/fierg/gRPC-demo.git</connection>
+        <developerConnection>scm:git:ssh://https://github.com/fierg/gRPC-demo.git</developerConnection>
+        <url>https://github.com/fierg/gRPC-demo/tree/main</url>
+    </scm>
 </project>
